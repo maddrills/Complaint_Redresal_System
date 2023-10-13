@@ -63,6 +63,7 @@ VALUES
 ('susan','{bcrypt}$2a$10$iK8SiXPvC9aVSBGAKWl16ubppO3G8DxYYRwNV.aKsKoCyKxgvIz7e',1,'123_456_567', 'susan@luv2code.com',4);
 
 
+
 --
 -- Table structure for table `role`
 --

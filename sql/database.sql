@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS admin_users;
 
 CREATE DATABASE admin_users;
 
+
 USE admin_users;
 
 SET foreign_key_checks = 0;
