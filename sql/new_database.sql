@@ -136,5 +136,35 @@ SELECT * FROM pincodes;
 
 
 
+DROP TABLE IF EXISTS `user_complaint`;
+
+DROP TABLE IF EXISTS `complaint`;
+
+-- complaint
+CREATE TABLE `complaint`(
+`id` INTEGER NOT NULL AUTO_INCREMENT,
+`active` SMALLINT DEFAULT 0 NOT NULL,
+`resolved` SMALLINT DEFAULT 0 NOT NULL,
+`escalated` SMALLINT DEFAULT 0 NOT NULL,
+`complaint` VARCHAR(300) NOT NULL,
+`user_id` INTEGER NOT NULL,
+`enginer_id` INTEGER NOT NULL,
+`manager_id` INTEGER NOT NULL,
+CONSTRAINT `complaint_primary_key_constraint` PRIMARY KEY(`id`)
+)AUTO_INCREMENT = 1;
+
+
+
+/*users*/
+CREATE TABLE `user_complaint`(
+`user_id` INTEGER NOT NULL,
+`complaint_id`INTEGER NOT NULL,
+CONSTRAINT `user_complaint_primary_key_constraint` PRIMARY KEY(`user_id`,`complaint_id`),
+CONSTRAINT `user_complaint_FOREIGN_KEY_user_id_constraint` FOREIGN KEY(`user_id`) REFERENCES `user`(`id`),
+CONSTRAINT `user_complaint_FOREIGN_KEY_complaint_id_constraint` FOREIGN KEY(`complaint_id`) REFERENCES `complaint`(`id`)
+);
+
+
+
 
 
