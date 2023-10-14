@@ -1,11 +1,15 @@
 package com.tryOne.AuthonBack.entity.security;
 
+import com.tryOne.AuthonBack.entity.complaint.Complaint;
 import com.tryOne.AuthonBack.entity.complaint.Pincodes;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "user")
@@ -44,6 +48,30 @@ public class User implements UserDetails {
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "pincode_id")
     private Pincodes pincodes;
+
+
+    /*
+    user join reference for complaint
+    * */
+    @ManyToMany(
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.PERSIST,
+                    CascadeType.REFRESH,
+                    CascadeType.REMOVE
+            }
+    )
+    @JoinTable(name = "user_complaint",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "complaint_id")
+    )
+    private Collection<Complaint> complaint;
+
+
+
+
 
     public User() {
     }
@@ -84,6 +112,21 @@ public class User implements UserDetails {
         this.email = email;
         this.roles = roles;
         this.pincodes = pincodes;
+    }
+
+
+    public Collection<Complaint> getComplaint() {
+        return complaint;
+    }
+
+
+    //convenience method for complaint
+    public void AddAComplaint(Complaint complaint){
+
+        if(this.complaint == null){
+            this.complaint = new ArrayList<>();
+        }
+        this.complaint.add(complaint);
     }
 
 
